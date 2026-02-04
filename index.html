@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>For You 💘</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      background: radial-gradient(circle at top, #ffe6eb, #ffb3c6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .container {
+      background: white;
+      padding: 50px 40px;
+      border-radius: 24px;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.2);
+      width: 420px;
+      text-align: center;
+      position: relative;
+      animation: scaleIn 1s ease forwards;
+    }
+
+    @keyframes scaleIn {
+      from {
+        transform: scale(0.8);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .message {
+      font-size: 20px;
+      color: #444;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.8s ease;
+    }
+
+    .message.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .heart {
+      position: absolute;
+      bottom: -20px;
+      font-size: 18px;
+      animation: floatUp 6s linear infinite;
+      opacity: 0.6;
+    }
+
+    @keyframes floatUp {
+      from {
+        transform: translateY(0) scale(1);
+        opacity: 0.8;
+      }
+      to {
+        transform: translateY(-110vh) scale(1.4);
+        opacity: 0;
+      }
+    }
+
+    .question {
+      margin-top: 30px;
+      opacity: 0;
+      transform: scale(0.9);
+      transition: all 1s ease;
+    }
+
+    .question.active {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .question h1 {
+      color: #ff4d6d;
+      margin-bottom: 25px;
+      font-size: 26px;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    button {
+      padding: 12px 28px;
+      border: none;
+      border-radius: 30px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .yes {
+      background: linear-gradient(135deg, #ff4d6d, #ff758f);
+      color: white;
+    }
+
+    .yes:hover {
+      transform: scale(1.1);
+      box-shadow: 0 10px 30px rgba(255, 77, 109, 0.5);
+    }
+
+    .no {
+      background: #eee;
+      color: #555;
+      position: relative;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <div id="msg" class="message"></div>
+
+    <div id="question" class="question">
+      <h1>Mag date date mo sa inyong bayu?</h1>
+      <div class="buttons">
+        <button class="yes" onclick="yesClick()">Yes! </button>
+        <button class="no" onmouseover="moveNo()">No;[</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const messages = [
+      " Hello Lods! 🧸ྀི ",
+      "Hapit na february 14‧₊ ᵎᵎ 🍒 ⋅ ˚✮",
+      "Saon man ta ning yati nga waman tay ka date 🌀",
+      "Okay pa kaha ta ani˚.🎀༘⋆",
+      "Di naman pod mo manginom⋆｡‧˚ʚ🍓ɞ˚‧｡⋆",
+      "Eh 7th wheel nalang ko ninyo୧⍤⃝💐",
+      "Bisayaa sad oy💋ྀིྀི",
+      "Na para bang huieee??!!🌐", 
+      "Pero bitaw papilion tamo oy⋆⭒˚.⋆🪐 ⋆⭒˚.⋆",
+
+    ];
+
+    const msgBox = document.getElementById("msg");
+    const question = document.getElementById("question");
+
+    let index = 0;
+
+    function showMessages() {
+      if (index < messages.length) {
+        msgBox.textContent = messages[index];
+        msgBox.classList.add("active");
+        index++;
+        setTimeout(() => {
+          msgBox.classList.remove("active");
+          setTimeout(showMessages, 600);
+        }, 2200);
+      } else {
+        question.classList.add("active");
+      }
+    }
+
+    showMessages();
+
+    function moveNo() {
+      const btn = document.querySelector(".no");
+      const x = Math.random() * 200 - 100;
+      const y = Math.random() * 100 - 50;
+      btn.style.transform = `translate(${x}px, ${y}px)`;
+    }
+
+    function yesClick() {
+      document.body.innerHTML = `
+        <div style="
+          height:100vh;
+          display:flex;
+          justify-content:center;
+          align-items:center;
+          flex-direction:column;
+          background:radial-gradient(circle at top,#ffe6eb,#ffb3c6);
+          text-align:center;
+          font-family:Poppins,sans-serif;
+          animation:fadeIn 1s ease;
+        ">
+          <h1 style="color:#ff4d6d;font-size:34px;">Yes pa talaga jusko 🗽⃢⃢🗿</h1>
+          <p style="font-size:20px;margin-top:15px;color:#444;">
+            TANGINA MAY ARAW DIN KAYO, hahaha!!🐦‍🔥
+          </p>
+        </div>
+      `;
+      createHearts();
+    }
+
+    function createHearts() {
+      setInterval(() => {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerHTML = "💗";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = Math.random() * 10 + 16 + "px";
+        heart.style.animationDuration = Math.random() * 3 + 4 + "s";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 7000);
+      }, 300);
+    }
+  </script>
+
+</body>
+</html>
